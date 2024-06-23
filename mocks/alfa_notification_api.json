@@ -1,0 +1,115 @@
+{
+  "uuid": "badef12f-b6ca-43af-a87c-34e812daac4a",
+  "lastMigration": 32,
+  "name": "Alfa notification api",
+  "endpointPrefix": "alfa",
+  "latency": 60,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "f6e0ffc8-9478-4e84-9b4a-5b72d16f12be",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/notification",
+      "responses": [
+        {
+          "uuid": "7d19e713-0794-403b-b45d-8557e766af23",
+          "body": "{\n  \"mobile\": \"{{bodyRaw 'mobile'}}\",\n  \"timestamp\": \"{{faker 'date.recent'}}\",\n  \"billed\": {{faker 'number.float' fractionDigits=3 max=1}}\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "mobile",
+              "value": ".+5$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "8d1e9909-b83b-4252-a629-6f47ed0dac58",
+          "body": "{\n  \"mobile\": {{bodyRaw 'mobile'}},\n  \"timestamp\": \"{{faker 'date.recent'}}\",\n  \"billed\": \"0\",\n  \"status\": false\n}",
+          "latency": 0,
+          "statusCode": 429,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "mobile",
+              "value": ".+5$",
+              "invert": true,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "f6e0ffc8-9478-4e84-9b4a-5b72d16f12be"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}
