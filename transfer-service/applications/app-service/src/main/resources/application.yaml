@@ -26,23 +26,23 @@ management:
   endpoints:
     web:
       exposure:
-        include: "health,prometheus"
+        include: "health,info,metrics,prometheus"
   endpoint:
     health:
       probes:
         enabled: true
 
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      sendNotification:
-#        registerHealthIndicator: true
-#        failureRateThreshold: 50
-#        slowCallRateThreshold: 50
-#        slowCallDurationThreshold: "2s"
-#        slidingWindowSize: 10
-#        minimumNumberOfCalls: 10
-#        waitDurationInOpenState: "10s"
+resilience4j:
+  circuitbreaker:
+    instances:
+      sendNotification:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slowCallRateThreshold: 100
+        slowCallDurationThreshold: 2s
+        slidingWindowSize: 100
+        minimumNumberOfCalls: 10
+        waitDurationInOpenState: 30s
 
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"

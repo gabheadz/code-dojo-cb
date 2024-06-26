@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  namespace: circuit-breaker
+  name: myservice
+spec:
+  host: reqres.in
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 100
+        maxRequestsPerConnection: 100
+      tcp:
+        maxConnections: 100
+    outlierDetection:
+      baseEjectionTime: 3m
+      consecutive5xxErrors: 1
+      interval: 1s
+      maxEjectionPercent: 100
