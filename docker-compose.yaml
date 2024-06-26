@@ -1,0 +1,21 @@
+version: "3"
+services: 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./observability_cfg/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - 3003:3003
+    volumes:
+      - ./observability_cfg/grafana/provisioning:/etc/grafana/provisioning
+      - ./observability_cfg/grafana/grafana.ini:/etc/grafana/grafana.ini
+    env_file:
+      - ./observability_cfg/grafana/grafana.env

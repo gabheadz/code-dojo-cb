@@ -6,11 +6,16 @@ dependencies {
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.2.0'
     implementation 'io.github.resilience4j:resilience4j-reactor:2.2.0'
     implementation 'io.micrometer:micrometer-core'
+    implementation 'io.projectreactor:reactor-core-micrometer'
     implementation 'org.mapstruct:mapstruct:1.6.0.Beta1'
+
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0.Beta1'
+
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
     testImplementation 'com.squareup.okhttp3:okhttp:4.12.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0.Beta1'
 
 }

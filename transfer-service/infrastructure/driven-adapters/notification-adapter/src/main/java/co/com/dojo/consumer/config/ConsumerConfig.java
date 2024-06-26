@@ -1,5 +1,6 @@
 package co.com.dojo.consumer.config;
 
+import io.micrometer.observation.ObservationRegistry;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,15 +22,18 @@ public class ConsumerConfig {
     private final int alfaTimeout;
     private final String betaUrl;
     private final int betaTimeout;
+    private final ObservationRegistry observationRegistry;
 
     public ConsumerConfig(@Value("${adapter.alfaservice.url}") String alfaUrl,
                           @Value("${adapter.alfaservice.timeout}") int alfaTimeout,
                           @Value("${adapter.betaservice.url}") String betaUrl,
-                          @Value("${adapter.betaservice.timeout}") int betaTimeout) {
+                          @Value("${adapter.betaservice.timeout}") int betaTimeout,
+                          ObservationRegistry observationRegistry) {
         this.alfaUrl = alfaUrl;
         this.alfaTimeout = alfaTimeout;
         this.betaUrl = betaUrl;
         this.betaTimeout = betaTimeout;
+        this.observationRegistry = observationRegistry;
     }
 
     @Bean(name = "alfaWebClient")
@@ -38,6 +42,7 @@ public class ConsumerConfig {
             .baseUrl(alfaUrl)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
             .clientConnector(getClientHttpConnector(alfaTimeout))
+            .observationRegistry(observationRegistry)
             .build();
     }
 
@@ -47,6 +52,7 @@ public class ConsumerConfig {
                 .baseUrl(betaUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                 .clientConnector(getClientHttpConnector(betaTimeout))
+                .observationRegistry(observationRegistry)
                 .build();
     }
 

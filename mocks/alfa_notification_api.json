@@ -18,7 +18,7 @@
         {
           "uuid": "7d19e713-0794-403b-b45d-8557e766af23",
           "body": "{\n  \"mobile\": \"{{bodyRaw 'mobile'}}\",\n  \"timestamp\": \"{{faker 'date.recent'}}\",\n  \"billed\": {{faker 'number.float' fractionDigits=3 max=1}}\n}",
-          "latency": 0,
+          "latency": 23,
           "statusCode": 200,
           "label": "",
           "headers": [],
